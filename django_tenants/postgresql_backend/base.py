@@ -22,7 +22,7 @@ else:
     import psycopg2 as psycopg
 
 
-DatabaseError = django.db.utils.DatabaseError
+DatabaseError = django.db.DatabaseError
 IntegrityError = psycopg.IntegrityError
 
 ORIGINAL_BACKEND = getattr(settings, 'ORIGINAL_BACKEND', 'django.db.backends.postgresql')
