@@ -14,13 +14,13 @@ jobs:
       matrix:
         # always use latest Python b/c the point here is to test PostgreSQL compatibility
         python-version: ["3.11"]
-        postgres-version: [11-bullseye, 12, 13, 14, 15]
+        postgres-version: [11-bullseye, 12, 13, 14, 15, 16]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -68,10 +68,10 @@ jobs:
           - python-version: "3.12"
             django-version: "==4.1.*"
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -100,7 +100,10 @@ jobs:
         coverage report -m
 
     - name: Send coverage to CodeCov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
+      if: env.CODECOV_TOKEN
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
         fail_ci_if_error: true
         verbose: true
